@@ -1,0 +1,429 @@
+---
+layout: default
+title: Hotel Prices in the Carlsbad Area
+---
+<body onload="renderChart()">
+<p>Recent debate has surfaced regarding the anomalous--or unanomalous?--hotel prices in the Carlsbad, New Mexico region. This site compiles hotel prices collected on April 30th, 2015 for individual night stays in May 2015. Base prices of some hotels in surrounding communities are included for further comparison.</p>
+
+<p>Rates for May 19th, a Tuesday, are selected to demonstrate an approximate weekday hotel rate:
+<div id="chart"><svg style="height:500px"></svg></div>
+<p>Hotels that fall into `~30 miles away` are found in White's City and Artesia; `~70 miles away` is expanded to include Hobbs and Roswell. Yelp review ratings are taken as of April 30th, 2015 as well. Hotels with no rating are given a null rating (0), as the lowest Yelp rating possible is a 1.<p>
+<p>Square: Hilton, Triangle Up: Best Western, Triangle Down: Choice Hotels, Cross: Marriott, Circle: Holiday Inn, Diamond: La Quinta</p>
+
+<p>No evaluation was performed for hotels outside an approximate 80 mile radius. Base rates (not including tax or any discounts) were selected. Day to day fluctuations occur, as some days likely have fewer rooms available. Additionally, prices closer to the beginning of May are less demonstrative of the "average" price as a few hotel sites generally increase prices if the booking is just a few days away; dates before May 6th fall within one week of this analysis. Finally, special events, like local graduation ceremonies, may especially skew some prices or result in sold out rooms.</p>
+
+<p>Breakdown of rate distribution for different room categories for the same day as above:
+<div id="charta"><svg style="height:80px"></svg></div>
+<div id="chartb"><svg style="height:80px"></svg></div>
+<div id="chartc"><svg style="height:80px"></svg></div><p>
+
+<h3>Next steps:</h3> 
+<p><a href="{{ "hotels/" | prepend: site.baseurl }}">Break down by specific hotel</a></p>
+
+
+</body>
+
+<script>
+function renderChart() {
+nv.addGraph(function() {
+  var chart = nv.models.scatterChart()
+                .color(d3.scale.category10().range())
+	;
+
+  //Configure how the tooltip looks.
+  chart.tooltipContent(function(key) {
+      return '<h3>' + key + '</h3>';
+  });
+
+  //Axis settings
+  chart.xAxis.axisLabel('Weekday Price');
+  chart.yAxis.axisLabel('Yelp Star Rating');
+
+  //We want to show shapes other than circles.
+
+  var myData = generateData();
+  d3.select('#chart svg')
+      .datum(myData)
+      .transition().duration(1000)
+      .call(chart);
+
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
+
+function generateData() {
+ var data = [],
+      shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+      keyvals = ['In Carlsbad','< 30 mi away','< 75 mi away'];
+
+
+ for (i = 0; i < 3; i++) { //3 groups: Carlsbad, ~30 mi, ~70mi
+  data.push({
+    key: keyvals[i],
+    values: []
+  });
+
+    if (i == 0) { 
+      data[i].values.push({ //best western 1 king
+        x: 171.99
+      , y: 2.5
+      , size: 1.00
+      , shape: "triangle-up"
+      });
+      data[i].values.push({ //best western 2 queen
+        x: 171.99
+      , y: 2.5
+      , size: 2.00
+      , shape: "triangle-up"
+      });
+      data[i].values.push({ //comfort suite 1 king suite
+        x: 229.00
+      , y: 3.5
+      , size: 3.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({ //comfort suite 2 king
+        x: 239.00
+      , y: 3.5
+      , size: 4.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({ //econo lodge 1 king
+        x: 90.00
+      , y: 2.00
+      , size: 1.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({ //econo lodge 2 queen
+        x: 90.00
+      , y: 2.00
+      , size: 2.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({ //fairfield 1 king
+        x: 269.00
+      , y: 3.5
+      , size: 1.00
+      , shape: "cross"
+      });
+      data[i].values.push({ //fairfield 2 queen
+        x: 259.00
+      , y: 3.5
+      , size: 2.00
+      , shape: "cross"
+      });
+      data[i].values.push({ //fairfield studio 1 king
+        x: 279.00
+      , y: 3.5
+      , size: 3.00
+      , shape: "cross"
+      });
+      data[i].values.push({ //fairfield studio 2 king
+        x: 269.00
+      , y: 3.5
+      , size: 4.00
+      , shape: "cross"
+      });
+      data[i].values.push({ //hampton 1 king
+        x: 309.00
+      , y: 4.00
+      , size: 1.00
+      , shape: "square"
+      });
+      data[i].values.push({ //hampton 2 queen
+        x: 309.00
+      , y: 4.00
+      , size: 2.00
+      , shape: "square"
+      });
+      data[i].values.push({ //hampton studio 1 king
+        x: 309.00
+      , y: 4.00
+      , size: 3.00
+      , shape: "square"
+      });
+      data[i].values.push({ //hampton suite 1 king
+        x: 319.00
+      , y: 4.00
+      , size: 4.00
+      , shape: "square"
+      });
+      data[i].values.push({ //holiday 1 king
+        x: 309.00
+      , y: 3.00
+      , size: 1.00
+      , shape: "circle"
+      });
+      data[i].values.push({ //holiday 2 queen
+        x: 309.00
+      , y: 3.00
+      , size: 2.00
+      , shape: "circle"
+      });
+      data[i].values.push({ //holiday studio 1 king
+        x: 329.00
+      , y: 3.00
+      , size: 3.00
+      , shape: "circle"
+      });
+      data[i].values.push({ //holiday studio 2 queen
+        x: 339.00
+      , y: 3.00
+      , size: 4.00
+      , shape: "circle"
+      });
+      data[i].values.push({ // holiday standard
+        x: 379.00
+      , y: 3.00
+      , size: 2.00
+      , shape: "circle"
+      });
+      data[i].values.push({ //lq 1 king
+        x: 209.00
+      , y: 3.00
+      , size: 1.00
+      , shape: "diamond"
+      });
+      data[i].values.push({ //lq 2 queen
+        x: 209.00
+      , y: 3.00
+      , size: 2.00
+      , shape: "diamond"
+      });
+      data[i].values.push({ //lq suite 1 king
+        x: 219.00
+      , y: 3.00
+      , size: 3.00
+      , shape: "diamond"
+      });
+      data[i].values.push({ //lq suite 2 king
+        x: 234.00
+      , y: 3.00
+      , size: 4.00
+      , shape: "diamond"
+      });
+      data[i].values.push({ //sleep 1 king
+        x: 179.00
+      , y: 0.00
+      , size: 1.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({ //sleep 2 queen
+        x: 189.00
+      , y: 0.00
+      , size: 2.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({ //sleep suite 1 king
+        x: 199.00
+      , y: 0.00
+      , size: 3.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({ //towne studio 1 king
+        x: 259.00
+      , y: 0.00
+      , size: 3.00
+      , shape: "cross"
+      });
+      data[i].values.push({ //towne studio 2 queen
+        x: 279.00
+      , y: 0.00
+      , size: 4.00
+      , shape: "circle"
+      });
+      data[i].values.push({ //towne suite 1 king
+        x: 309.00
+      , y: 0.00
+      , size: 5.00
+      , shape: "cross"
+      });
+      data[i].values.push({ //towne suite 2 king
+        x: 339.00
+      , y: 0.00
+      , size: 6.00
+      , shape: "cross"
+      });
+    } else if (i == 1) { 
+      data[i].values.push({ //rodeway inn white's city 1 king
+        x: 105.00
+      , y: 3.00
+      , size: 1.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({  //rodeway inn white's city 2 queen
+        x: 105.00
+      , y: 3.00
+      , size: 2.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({  //la quinta artesia 1 king
+        x: 139.00
+      , y: 4.00
+      , size: 1.00
+      , shape: "diamond"
+      });
+      data[i].values.push({  //la quinta artesia 2 queen
+        x: 149.00
+      , y: 4.00
+      , size: 2.00
+      , shape: "diamond"
+      });
+      data[i].values.push({  //la quinta artesia studio 1 king
+        x: 159.00
+      , y: 4.00
+      , size: 3.00
+      , shape: "diamond"
+      });
+      data[i].values.push({  //best western artesia studio 1 king
+        x: 144.99
+      , y: 4.00
+      , size: 1.0
+      , shape: "triangle-up"
+      });
+      data[i].values.push({  //best western artesia studio 2 queen
+        x: 139.99
+      , y: 4.00
+      , size: 2.00
+      , shape: "triangle-up"
+      });
+      data[i].values.push({  //comfort inn artesia 1 king
+        x: 159.99
+      , y: 2.5
+      , size: 1.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({  //comfort inn artesia 2 queen
+        x: 169.99
+      , y: 2.5
+      , size: 2.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({  //comfort inn artesia suite 1 king
+        x: 169.99
+      , y: 2.5
+      , size: 3.00
+      , shape: "triangle-down"
+      });
+      data[i].values.push({  //comfort inn artesia suite 1 king 2 rooms
+        x: 199.99
+      , y: 2.5
+      , size: 5.00
+      , shape: "triangle-down"
+      });
+    } else if (i == 2) {   
+      data[i].values.push({ //la quinta roswell 1 king
+        x: 109.00
+      , y: 4.5
+      , size: 1
+      , shape: "diamond"
+      });
+      data[i].values.push({ //la quinta roswell 2 queen
+        x: 109.00
+      , y: 4.5
+      , size: 2.00
+      , shape: "diamond"
+      });
+      data[i].values.push({ //la quinta roswell suite 1 king
+        x: 129.00
+      , y: 4.5
+      , size: 3.00
+      , shape: "diamond"
+      });
+      data[i].values.push({ //la quinta roswell suite 2 queen
+        x: 129.00
+      , y: 4.5
+      , size: 4.00
+      , shape: "diamond"
+      });
+      data[i].values.push({ //la quinta hobbs 1 king
+        x: 149.00
+      , y: 4.00
+      , size: 1.00
+      , shape: "diamond"
+      });
+      data[i].values.push({ //la quinta hobbs 1 king suite
+        x: 154.00
+      , y: 4.00
+      , size: 3.00
+      , shape: "diamond"
+      });
+      data[i].values.push({ //la quinta hobbs 1 king suite 2 room
+        x: 159.00
+      , y: 4.00
+      , size: 5.00
+      , shape: "diamond"
+      });
+
+    };
+  };
+  return data;
+}
+
+nv.addGraph(function() {  
+  var chart = nv.models.bulletChart();
+
+  d3.select('#charta svg')
+      .datum(exampleDataa())
+      .transition().duration(1000)
+      .call(chart);
+
+  return chart;
+});
+
+
+function exampleDataa() {
+  return {
+  	"title":"Carlsbad",		//Label the bullet chart
+  	"subtitle":"One King",		//sub-label for bullet chart
+  	"ranges":[min1,med1,max1],	 //Minimum, mean and maximum values.
+  	"measures":[avg1],		 //Value representing current measurement (the thick blue line in the example)
+  };
+}
+
+nv.addGraph(function() {  
+  var chart = nv.models.bulletChart();
+
+  d3.select('#chartb svg')
+      .datum(exampleDatab())
+      .transition().duration(1000)
+      .call(chart);
+
+  return chart;
+});
+
+
+function exampleDatab() {
+  return {
+  	"title":"Carlsbad",		//Label the bullet chart
+  	"subtitle":"Two Queens",		//sub-label for bullet chart
+  	"ranges":[min2,med2,max2],	 //Minimum, mean and maximum values.
+  	"measures":[avg2],		 //Value representing current measurement (the thick blue line in the example)
+  };
+}
+
+nv.addGraph(function() {  
+  var chart = nv.models.bulletChart();
+
+  d3.select('#chartc svg')
+      .datum(exampleDatac())
+      .transition().duration(1000)
+      .call(chart);
+
+  return chart;
+});
+
+
+function exampleDatac() {
+  return {
+  	"title":"Carlsbad",		//Label the bullet chart
+  	"subtitle":"1 King Suite",		//sub-label for bullet chart
+  	"ranges":[min1s,med1s,max1s],	 //Minimum, mean and maximum values.
+  	"measures":[avg1s],		 //Value representing current measurement (the thick blue line in the example)
+  };
+}
+
+};
+
+</script>

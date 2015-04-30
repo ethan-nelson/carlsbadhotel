@@ -1,0 +1,75 @@
+---
+layout: page
+title: Sleep Inn and Suites
+---
+<p><a href="http://www.openstreetmap.org/node/2086454382" target="_blank">3825 National Parks Highway<br />
+Carlsbad, NM 88220</a></p>
+<div id="chart"><svg style='height:500px'> </svg></div>
+<script>
+nv.addGraph(function() {
+  var chart = nv.models.lineChart()
+                .margin({left: 75, right: 30})  //Adjust chart margins to give the x-axis some breathing room.
+                .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+                .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
+                .showYAxis(true)        //Show the y-axis
+                .showXAxis(true)        //Show the x-axis
+  ;
+
+  chart.xAxis     //Chart x-axis settings
+      .axisLabel('Date')
+      .tickValues([new Date(2015, 04, 03), new Date(2015, 04, 10), new Date(2015, 04, 17), new Date(2015, 04, 24), new Date(2015, 04, 31)])
+      .tickFormat((function(d) {
+            return d3.time.format('%x')(new Date(d))
+          }));
+
+  chart.yAxis     //Chart y-axis settings
+      .axisLabel('Price ($)');
+
+  /* Done setting the chart up? Time to render it!*/
+  var myData = generateData();   //You need data...
+
+  d3.select('#chart svg')    //Select the <svg> element you want to render the chart in.   
+      .datum(myData)         //Populate the <svg> element with chart data...
+      .call(chart);          //Finally, render the chart!
+
+  //Update the chart when window resizes.
+  nv.utils.windowResize(function() { chart.update() });
+  return chart;
+});
+function generateData() {
+  datavals1 = [];
+  datavals2 = [];
+  datavals3 = [];
+  datavals4 = [];
+
+   for (var i = 2; i < 31; i++) {
+      dateval = new Date(2015, 04, (i+1));
+      datavals1.push({x: dateval, y: sl1king[i]});
+      datavals2.push({x: dateval, y: sl2queen[i]});
+      datavals3.push({x: dateval, y: slsuite1king[i]});
+     // datavals4.push({x: dateval, y: tpsuite2king[i]});
+   }
+
+	return [
+	  {
+		values: datavals1,
+		key: '1 King',
+		color: '#ff7f0e'
+	  },
+     {
+        values: datavals2,
+        key: '2 Queens',
+        color: '#2ca02c'
+      },
+     {
+        values: datavals3,
+        key: 'Suite: 1 King',
+        color: '#7777ff'
+      }//,
+     // {
+     //   values: datavals4,
+     //   key: 'Suite: 2 Kings'
+     // }
+	];
+}
+</script>

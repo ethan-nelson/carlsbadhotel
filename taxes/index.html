@@ -1,0 +1,147 @@
+---
+layout: page
+title: Tax Breakdown
+---
+<p>This page shows the expected taxes on a room with a rate of $100.00. Unless noted as a flat tax, the listed fees represent a fixed percentage of the base rate.</p>
+
+<div id="charta"><h3>Carlsbad</h3><svg style="height:400px; width:600px"></svg></div><br />
+<div id="chartb"><h3>White's City</h3><svg style="height:400px; width:600px"></svg></div><br />
+<div id="chartc"><h3>Artesia</h3><svg style="height:400px; width:600px"></svg></div><br />
+<div id="chartd"><h3>Hobbs</h3><svg style="height:400px; width:600px"></svg></div><br />
+<div id="charte"><h3>Roswel</h3><svg style="height:400px; width:600px"></svg></div>
+
+<script>
+nv.addGraph(function() {
+  var chart = nv.models.pieChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .showLabels(true);
+
+    d3.select("#charta svg")
+        .datum(generateDataa())
+        .transition().duration(1000)
+        .call(chart);
+
+  return chart;
+});
+
+nv.addGraph(function() {
+  var chart = nv.models.pieChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .showLabels(true);
+
+    d3.select("#chartb svg")
+        .datum(generateDatab())
+        .transition().duration(1000)
+        .call(chart);
+
+  return chart;
+});
+
+nv.addGraph(function() {
+  var chart = nv.models.pieChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .showLabels(true);
+
+    d3.select("#chartc svg")
+        .datum(generateDatac())
+        .transition().duration(1000)
+        .call(chart);
+
+  return chart;
+});
+
+nv.addGraph(function() {
+  var chart = nv.models.pieChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .showLabels(true);
+
+    d3.select("#chartd svg")
+        .datum(generateDatad())
+        .transition().duration(1000)
+        .call(chart);
+
+  return chart;
+});
+
+nv.addGraph(function() {
+  var chart = nv.models.pieChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .showLabels(true);
+
+    d3.select("#charte svg")
+        .datum(generateDatae())
+        .transition().duration(1000)
+        .call(chart);
+
+  return chart;
+});
+
+function generateDataa() { // Carlsbad
+  return [
+    {
+      "label": "Base Rate",
+      "value": 100.00
+    } ,
+    {
+      "label": "Tax",
+      "value": 12.40
+    }
+]};
+
+function generateDatab() { // White's City
+  return [
+    {
+      "label": "Base Rate",
+      "value": 100.00
+    } ,
+    {
+      "label": "Tax",
+      "value": 12.40
+    }
+]};
+
+function generateDatac() { // Artesia
+  return [
+    {
+      "label": "Base Rate",
+      "value": 100.00
+    } ,
+    {
+      "label": "Tax",
+      "value": 12.50
+    }
+]};
+
+function generateDatad() { // Hobbs
+  return [
+    {
+      "label": "Base Rate",
+      "value": 100.00
+    } ,
+    {
+      "label": "Tax",
+      "value": 11.69
+    }
+]};
+
+function generateDatae() { // Roswell
+  return [
+    {
+      "label": "Base Rate",
+      "value": 100.00
+    } ,
+    {
+      "label": "Sales Tax",
+      "value": 12.125
+    } ,
+    {
+      "label": "Flat Tax",
+      "value": 3.490
+    }
+]};
+</script>
